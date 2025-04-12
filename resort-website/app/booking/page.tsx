@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { Calendar, User, Check } from "lucide-react"
@@ -14,28 +14,6 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 export default function BookingPage() {
   const [step, setStep] = useState(1)
   const [selectedRoom, setSelectedRoom] = useState("")
-  const [rooms, setRooms] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
-
-  useEffect(() => {
-    async function fetchRooms() {
-      try {
-        const response = await fetch("http://127.0.0.1:8000/booking/rooms/")
-        if (!response.ok) {
-          throw new Error("Failed to fetch rooms")
-        }
-        const data = await response.json()
-        setRooms(data)
-        setLoading(false)
-      } catch (err) {
-        setError(err.message)
-        setLoading(false)
-      }
-    }
-    
-    fetchRooms()
-  }, [])
 
   const handleRoomSelect = (roomId: string) => {
     setSelectedRoom(roomId)
@@ -49,6 +27,34 @@ export default function BookingPage() {
   const handleBack = () => {
     setStep(step - 1)
   }
+
+  // Mock room data
+  const rooms = [
+    {
+      id: "standard",
+      name: "Standard Room",
+      description: "Comfortable room with all basic amenities",
+      price: 150,
+      capacity: "2 Adults",
+      image: "/placeholder.svg?height=200&width=300",
+    },
+    {
+      id: "deluxe",
+      name: "Deluxe Room",
+      description: "Spacious room with premium furnishings and lake view",
+      price: 250,
+      capacity: "2 Adults, 1 Child",
+      image: "/placeholder.svg?height=200&width=300",
+    },
+    {
+      id: "suite",
+      name: "Executive Suite",
+      description: "Luxury suite with separate living area and private balcony",
+      price: 350,
+      capacity: "2 Adults, 2 Children",
+      image: "/placeholder.svg?height=200&width=300",
+    },
+  ]
 
   return (
     <main className="min-h-screen bg-[#f8e0c0] py-12">
@@ -128,7 +134,7 @@ export default function BookingPage() {
                         </div>
                       </div>
                       <Button variant="outline" size="sm" className="border-[#8B4513] text-[#8B4513]">
-                        <Link href="/home">Modify</Link>
+                        Modify
                       </Button>
                     </div>
                   </div>

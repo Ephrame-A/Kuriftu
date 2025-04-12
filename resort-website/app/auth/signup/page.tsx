@@ -1,267 +1,199 @@
 "use client"
 
 import type React from "react"
+
 import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
-import { Mail, Lock, User, Phone, MapPin, Calendar } from "lucide-react"
+import { User, Mail, Lock } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useToast } from "@/components/ui/use-toast"
+import { Separator } from "@/components/ui/separator"
+import { Checkbox } from "@/components/ui/checkbox"
 
-export default function SignUpPage() {
-  const router = useRouter()
-  const { toast } = useToast()
-  const [isLoading, setIsLoading] = useState(false)
+export default function SignupPage() {
   const [formData, setFormData] = useState({
-    username: "",
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
-    password2: "",
-    first_name: "",
-    last_name: "",
-    phone_number: "",
-    address: "",
-    date_of_birth: "",
+    confirmPassword: "",
+    agreeTerms: false,
   })
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }))
+    setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleCheckboxChange = (checked: boolean) => {
+    setFormData((prev) => ({ ...prev, agreeTerms: checked }))
+  }
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    setIsLoading(true)
+    // Handle signup logic
+    console.log("Signup with:", formData)
+  }
 
-    try {
-      const response = await fetch("http://127.0.0.1:8000/user/register/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      })
-
-      const data = await response.json()
-
-      if (!response.ok) {
-        throw new Error(data.detail || "Registration failed")
-      }
-
-      // Store tokens in localStorage
-      localStorage.setItem("access_token", data.access)
-      localStorage.setItem("refresh_token", data.refresh)
-      localStorage.setItem("user", JSON.stringify(data.user))
-
-      toast({
-        title: "Success",
-        description: "Welcome to Kuriftu Resort & Spa!",
-      })
-
-      // Redirect to home page
-      router.push("/home")
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: error instanceof Error ? error.message : "Registration failed",
-        variant: "destructive",
-      })
-    } finally {
-      setIsLoading(false)
-    }
+  const handleGoogleSignup = () => {
+    // Handle Google signup
+    console.log("Signup with Google")
   }
 
   return (
     <main className="min-h-screen bg-[#f8e0c0] py-12">
       <div className="container mx-auto px-4">
-        <div className="max-w-2xl mx-auto bg-white rounded-lg overflow-hidden shadow-lg">
+        <div className="max-w-md mx-auto bg-white rounded-lg overflow-hidden shadow-lg">
           <div className="relative h-32 bg-[#2A2A2A]">
             <div className="absolute inset-0 flex items-center justify-center">
-              <h1 className="text-2xl font-bold text-white">Create Your Account</h1>
+              <h1 className="text-2xl font-bold text-white">Create an Account</h1>
             </div>
           </div>
 
           <div className="p-8">
             <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="username">Username</Label>
+                  <Label htmlFor="firstName">First Name</Label>
                   <div className="relative">
                     <User className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
                     <Input
-                      id="username"
-                      name="username"
-                      type="text"
-                      placeholder="johndoe"
-                      className="pl-10 border-[#D7CCC8]"
-                      value={formData.username}
-                      onChange={handleChange}
-                      required
-                      disabled={isLoading}
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
-                  <div className="relative">
-                    <Mail className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
-                    <Input
-                      id="email"
-                      name="email"
-                      type="email"
-                      placeholder="your@email.com"
-                      className="pl-10 border-[#D7CCC8]"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                      disabled={isLoading}
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="password">Password</Label>
-                  <div className="relative">
-                    <Lock className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
-                    <Input
-                      id="password"
-                      name="password"
-                      type="password"
-                      placeholder="••••••••"
-                      className="pl-10 border-[#D7CCC8]"
-                      value={formData.password}
-                      onChange={handleChange}
-                      required
-                      disabled={isLoading}
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="password2">Confirm Password</Label>
-                  <div className="relative">
-                    <Lock className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
-                    <Input
-                      id="password2"
-                      name="password2"
-                      type="password"
-                      placeholder="••••••••"
-                      className="pl-10 border-[#D7CCC8]"
-                      value={formData.password2}
-                      onChange={handleChange}
-                      required
-                      disabled={isLoading}
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="first_name">First Name</Label>
-                  <div className="relative">
-                    <User className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
-                    <Input
-                      id="first_name"
-                      name="first_name"
-                      type="text"
+                      id="firstName"
+                      name="firstName"
                       placeholder="John"
                       className="pl-10 border-[#D7CCC8]"
-                      value={formData.first_name}
+                      value={formData.firstName}
                       onChange={handleChange}
                       required
-                      disabled={isLoading}
                     />
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="last_name">Last Name</Label>
+                  <Label htmlFor="lastName">Last Name</Label>
                   <div className="relative">
                     <User className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
                     <Input
-                      id="last_name"
-                      name="last_name"
-                      type="text"
+                      id="lastName"
+                      name="lastName"
                       placeholder="Doe"
                       className="pl-10 border-[#D7CCC8]"
-                      value={formData.last_name}
+                      value={formData.lastName}
                       onChange={handleChange}
                       required
-                      disabled={isLoading}
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="phone_number">Phone Number</Label>
-                  <div className="relative">
-                    <Phone className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
-                    <Input
-                      id="phone_number"
-                      name="phone_number"
-                      type="tel"
-                      placeholder="+1234567890"
-                      className="pl-10 border-[#D7CCC8]"
-                      value={formData.phone_number}
-                      onChange={handleChange}
-                      disabled={isLoading}
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="date_of_birth">Date of Birth</Label>
-                  <div className="relative">
-                    <Calendar className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
-                    <Input
-                      id="date_of_birth"
-                      name="date_of_birth"
-                      type="date"
-                      className="pl-10 border-[#D7CCC8]"
-                      value={formData.date_of_birth}
-                      onChange={handleChange}
-                      disabled={isLoading}
                     />
                   </div>
                 </div>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="address">Address</Label>
+                <Label htmlFor="email">Email</Label>
                 <div className="relative">
-                  <MapPin className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+                  <Mail className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
                   <Input
-                    id="address"
-                    name="address"
-                    type="text"
-                    placeholder="Your address"
+                    id="email"
+                    name="email"
+                    type="email"
+                    placeholder="your@email.com"
                     className="pl-10 border-[#D7CCC8]"
-                    value={formData.address}
+                    value={formData.email}
                     onChange={handleChange}
-                    disabled={isLoading}
+                    required
                   />
                 </div>
               </div>
 
-              <Button 
-                type="submit" 
+              <div className="space-y-2">
+                <Label htmlFor="password">Password</Label>
+                <div className="relative">
+                  <Lock className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+                  <Input
+                    id="password"
+                    name="password"
+                    type="password"
+                    placeholder="••••••••"
+                    className="pl-10 border-[#D7CCC8]"
+                    value={formData.password}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="confirmPassword">Confirm Password</Label>
+                <div className="relative">
+                  <Lock className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+                  <Input
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    type="password"
+                    placeholder="••••••••"
+                    className="pl-10 border-[#D7CCC8]"
+                    value={formData.confirmPassword}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="flex items-center space-x-2">
+                <Checkbox id="terms" checked={formData.agreeTerms} onCheckedChange={handleCheckboxChange} required />
+                <label
+                  htmlFor="terms"
+                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                  I agree to the{" "}
+                  <Link href="/terms" className="text-[#8B4513] hover:underline">
+                    terms and conditions
+                  </Link>
+                </label>
+              </div>
+
+              <Button
+                type="submit"
                 className="w-full bg-[#8B4513] hover:bg-[#6D4C41] text-white"
-                disabled={isLoading}
+                disabled={!formData.agreeTerms}
               >
-                {isLoading ? "Creating account..." : "Create Account"}
+                Create Account
               </Button>
             </form>
 
+            <div className="mt-6">
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <Separator className="w-full" />
+                </div>
+                <div className="relative flex justify-center text-sm">
+                  <span className="px-2 bg-white text-gray-500">Or continue with</span>
+                </div>
+              </div>
+
+              <div className="mt-6">
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="w-full border-[#D7CCC8]"
+                  onClick={handleGoogleSignup}
+                >
+                  <Image
+                    src="/placeholder.svg?height=20&width=20"
+                    alt="Google"
+                    width={20}
+                    height={20}
+                    className="mr-2"
+                  />
+                  Sign up with Google
+                </Button>
+              </div>
+            </div>
+
             <div className="mt-6 text-center text-sm">
               <span className="text-gray-500">Already have an account?</span>{" "}
-              <Link href="/" className="text-[#8B4513] hover:underline font-medium">
+              <Link href="/auth/login" className="text-[#8B4513] hover:underline font-medium">
                 Sign in
               </Link>
             </div>

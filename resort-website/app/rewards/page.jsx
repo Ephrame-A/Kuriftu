@@ -274,11 +274,7 @@ export default function RewardsPage() {
                   : `Highest tier achieved`}
               </span>
             </div>
-            <Progress
-              value={animateProgress ? tierInfo.progress : 0}
-              className="h-3 bg-[#EDDCBE]"
-              indicatorclassname="bg-gradient-to-r from-[#8B4513] to-[#5D4037]"
-            />
+            
           </div>
         </div>
       </section>
