@@ -1,5 +1,5 @@
 import type React from "react"
-
+import { Header } from "@/components/layout/header"
 import { AIAssistant } from "@/components/ai-assistant"
 import { Inter } from "next/font/google"
 import "./globals.css"
@@ -20,6 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} bg-[#F8E0C0]`}>
+        <Header />
         {children}
         <AIAssistant />
       </body>

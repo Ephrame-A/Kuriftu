@@ -116,7 +116,7 @@ export default function RoomsPage() {
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-3 gap-8">
             <div>
-              <h3 className="text-xl font-semibold mb-4">Hyge Royal Resort</h3>
+              <h3 className="text-xl font-semibold mb-4">Kuriftu Resort</h3>
               <address className="not-italic">
                 <div className="flex items-center mb-2">
                   <MapPin className="w-5 h-5 mr-2" />
@@ -128,7 +128,7 @@ export default function RoomsPage() {
                 </div>
                 <div className="flex items-center">
                   <Mail className="w-5 h-5 mr-2" />
-                  <span>info@hygeroyal.com</span>
+                  <span>info@kuriftu.com</span>
                 </div>
               </address>
             </div>
@@ -180,7 +180,7 @@ export default function RoomsPage() {
             </div>
           </div>
           <div className="border-t border-[#A1887F] mt-8 pt-6 text-center">
-            <p>&copy; {new Date().getFullYear()} Hyge Royal Resort. All rights reserved.</p>
+            <p>&copy; {new Date().getFullYear()} Kuriftu Resort. All rights reserved.</p>
           </div>
         </div>
       </footer>

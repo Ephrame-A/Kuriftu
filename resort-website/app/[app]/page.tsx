@@ -7,12 +7,45 @@ import { BookingBar } from "@/components/booking-bar"
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen bg-[#f8e0c0] py-12">
-      <div className="container mx-auto px-4">
-        <div className="max-w-md mx-auto bg-white rounded-lg overflow-hidden shadow-lg">
-          <div className="relative h-32 bg-[#2A2A2A]">
-            <div className="absolute inset-0 flex items-center justify-center">
-              <h1 className="text-2xl font-bold text-white">Welcome to Kuriftu Resort & Spa</h1>
+    <main className="min-h-screen bg-[#f8e0c0]">
+      {/* Hero Section */}
+      <section className="relative w-full">
+        <div className="relative w-full h-[500px]">
+          <Image
+            src="photo_2025-04-10_16-17-44.jpg"
+            alt="Kuriftu Resort & Spa"
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-black/30 flex flex-col items-center justify-center">
+            <h1 className="text-3xl md:text-5xl font-bold text-white text-center max-w-3xl">
+              Enjoy the Luxurious Stay at the
+            </h1>
+            <h2 className="text-2xl md:text-4xl font-bold text-white text-center mt-2">KURIFTU RESORT & SPA</h2>
+          </div>
+        </div>
+
+        {/* Booking Bar */}
+        <div className="relative mx-auto px-4 -mt-8 md:-mt-16 z-10 max-w-5xl">
+          <BookingBar />
+        </div>
+      </section>
+
+      {/* Our Resorts Section */}
+      <section className="container mx-auto px-4 py-8 md:py-16 mt-4 md:mt-8">
+        <h2 className="text-3xl font-bold text-[#8B4513] mb-10">Our Resorts</h2>
+
+        <div className="flex flex-col md:flex-row gap-6 md:gap-8">
+          <div className="md:w-2/5">
+            <div className="rounded-lg overflow-hidden">
+              <Image
+                src="/placeholder.svg?height=400&width=600"
+                alt="African Village"
+                width={600}
+                height={400}
+                className="object-cover w-full h-full"
+              />
             </div>
           </div>
           <div className="md:w-3/5 mt-4 md:mt-0">
@@ -167,7 +200,7 @@ export default function HomePage() {
                 </div>
               </div>
               <p className="text-[#5D4037]">
-                "Amazing experience at Hyge Royal Resort. The African Village accommodation was authentic and
+                "Amazing experience at Kuriftu Resort. The African Village accommodation was authentic and
                 comfortable. Will definitely return!"
               </p>
             </div>
@@ -188,37 +221,66 @@ export default function HomePage() {
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-3 gap-8">
             <div>
-              <h3 className="text-xl font-semibold mb-4">Hyge Royal Resort</h3>
+              <h3 className="text-xl font-semibold mb-4">Kuriftu Resort</h3>
               <address className="not-italic">
                 <div className="flex items-center mb-2">
                   <MapPin className="w-5 h-5 mr-2" />
                   <span>123 Resort Avenue, Lake District</span>
                 </div>
-                <div className="relative flex justify-center text-sm">
-                  <span className="px-2 bg-white text-gray-500">Or continue with</span>
+                <div className="flex items-center mb-2">
+                  <Phone className="w-5 h-5 mr-2" />
+                  <span>+1 234 567 8900</span>
                 </div>
                 <div className="flex items-center">
                   <Mail className="w-5 h-5 mr-2" />
-                  <span>info@hygeroyal.com</span>
+                  <span>info@kuriftu.com</span>
                 </div>
               </address>
             </div>
-
-            <div className="mt-6 text-center text-sm">
-              <span className="text-gray-500">Don&apos;t have an account?</span>{" "}
-              <Link href="/auth/signup" className="text-[#8B4513] hover:underline font-medium">
-                Sign up
-              </Link>
+            <div>
+              <h3 className="text-xl font-semibold mb-4">Quick Links</h3>
+              <ul className="space-y-2">
+                <li>
+                  <Link href="#" className="hover:underline">
+                    Home
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#" className="hover:underline">
+                    Accommodations
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#" className="hover:underline">
+                    Activities
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#" className="hover:underline">
+                    Dining
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#" className="hover:underline">
+                    Contact
+                  </Link>
+                </li>
+              </ul>
             </div>
-
-            <div className="mt-6 text-center">
-              <Link href="/home" className="text-[#8B4513] hover:underline text-sm">
-                Continue as guest
-              </Link>
+            <div>
+              <h3 className="text-xl font-semibold mb-4">Newsletter</h3>
+              <p className="mb-4">Subscribe to our newsletter for special deals and updates</p>
+              <div className="flex">
+                <input type="email" placeholder="Your email" className="px-4 py-2 rounded-l-md w-full text-black" />
+                <Button className="bg-[#6D4C41] hover:bg-[#5D4037] rounded-l-none">Subscribe</Button>
+              </div>
             </div>
           </div>
+          <div className="border-t border-[#A1887F] mt-8 pt-6 text-center">
+            <p>&copy; {new Date().getFullYear()} Kuriftu Resort. All rights reserved.</p>
+          </div>
         </div>
-      </div>
+      </footer>
     </main>
   )
 }
