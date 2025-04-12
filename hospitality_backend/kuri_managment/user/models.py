@@ -1,5 +1,5 @@
-from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.db import models
 from django.core.validators import RegexValidator
 
 class User(AbstractUser):
@@ -9,14 +9,17 @@ class User(AbstractUser):
     )
     
     email = models.EmailField(unique=True)
-    phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True)
-    address = models.TextField(blank=True)
+    phone_number = models.CharField(max_length=15, blank=True, null=True)
+    address = models.TextField(blank=True, null=True)
     date_of_birth = models.DateField(null=True, blank=True)
     profile_picture = models.ImageField(upload_to='profile_pics/', null=True, blank=True)
     
     # Additional fields for hotel management
     is_staff_member = models.BooleanField(default=False)
     department = models.CharField(max_length=100, blank=True)
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username']
 
     groups = models.ManyToManyField(
         'auth.Group',
