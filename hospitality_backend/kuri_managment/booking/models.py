@@ -32,6 +32,10 @@ class Room(models.Model):
             raise ValidationError("A room can have at most 8 features.")
 
 
+from django.db import models, transaction
+from django.core.exceptions import ValidationError
+from django.conf import settings
+
 class Booking(models.Model):
     STATUS_CHOICES = [
         ('pending', 'Pending'),
@@ -81,11 +85,11 @@ class Booking(models.Model):
 
         if overlapping_bookings.exists():
             raise ValidationError("This room is already booked for the selected dates.")
-
         if self.check_out <= self.check_in:
             raise ValidationError("Check-out date must be after check-in date.")
 
     def save(self, *args, **kwargs):
-        self.total_price = self.calculate_total_price()
-        self.full_clean() 
-        super().save(*args, **kwargs)
+        with transaction.atomic():
+            self.total_price = self.calculate_total_price()
+            self.full_clean()
+            super().save(*args, **kwargs)

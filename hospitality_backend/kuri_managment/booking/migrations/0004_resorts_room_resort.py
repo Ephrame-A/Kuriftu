@@ -21,7 +21,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='room',
             name='resort',
-            field=models.ForeignKey(default='hello', on_delete=django.db.models.deletion.CASCADE, related_name='resort_name', to='booking.resorts'),
-            preserve_default=False,
+            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='resort_name', to='booking.resorts'),
         ),
     ]
