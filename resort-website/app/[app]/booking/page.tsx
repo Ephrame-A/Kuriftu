@@ -128,7 +128,7 @@ export default function BookingPage() {
                         </div>
                       </div>
                       <Button variant="outline" size="sm" className="border-[#8B4513] text-[#8B4513]">
-                        Modify
+                        <Link href="/home">Modify</Link>
                       </Button>
                     </div>
                   </div>
