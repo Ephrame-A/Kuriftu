@@ -36,12 +36,22 @@ INSTALLED_APPS = [
     'corsheaders',
     'django.contrib.auth',
     'django.contrib.contenttypes',
+    'rest_framework_simplejwt.token_blacklist',
+
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'booking',
     'chatbot',
+    'user',
 ]
+AUTH_USER_MODEL = 'user.User'  # Replace 'yourapp' with the app name
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
