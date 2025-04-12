@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import Booking
-
+from rest_framework import serializers
+from .models import Room, Feature  # adjust imports if your model names differ
 class BookingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Booking
@@ -37,8 +38,7 @@ class BookingSerializer(serializers.ModelSerializer):
         booking.save()
         return booking
 # serializers.py
-from rest_framework import serializers
-from .models import Room, Feature  # adjust imports if your model names differ
+
 
 class FeatureSerializer(serializers.ModelSerializer):
     class Meta:
